@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Typing speed test</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        font-family: Times New Roman;
+      }
+      #text {
+        font-family: Times New Roman;
+        height: 200px;
+        width: 100%;
+        margin: 5px;
+        font-size: 1rem;
+      }
+      #text:focus {
+      }
+    </style>
+  </head>
+  <body onload="main()">
+    <textarea id="text"></textarea>
+    <div class="wpm"></div>
+  </body>
+  <script type="text/javascript" charset="utf-8">
+    function main() {
+      var time = 0;
+      var words = 0;
+      var text = new String();
+
+      var textArea = document.getElementById("text");
+
+      var wpm = document.getElementsByClassName("wpm");
+      wpm = wpm[0];
+
+      textArea.addEventListener("focus", function () {
+        setInterval(function () {
+          time++;
+          text = textArea.value;
+
+          text = text.split(" ");
+          for (i = 1; i < text.length; i++) {
+            if (text[i] === "") {
+              text.splice(i, 1);
+            }
+            if (text[i] != undefined && text[i].length < 3) {
+              text.splice(i, 1);
+            }
+          }
+
+          words = text.length;
+
+          wpm.innerHTML = "Speed: " + Math.round((words * 60) / time) + " WPM";
+
+          words = 0;
+        }, 1000);
+      });
+    }
+  </script>
+</html>
